@@ -16,16 +16,19 @@ public class Member {
     private Long id;
     @Column(nullable = false)
     private String email;
-
+    @Column(nullable = false)
+    private String name;
     @Builder
-    public Member(String email){
+    public Member(String email, String name){
         this.email = email;
+        this.name = name;
     }
 
     public MemberDto toDto(){
         return MemberDto.builder()
                 .id(this.id)
                 .email(this.email)
+                .name(this.name)
                 .build();
     }
 }
