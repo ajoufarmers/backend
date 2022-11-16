@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface PlantRepository extends JpaRepository<Plant, Long> {
-    Optional<Plant> save(Plant plant);
+    Plant save(Plant plant);
     Optional<Plant> findByName(String name);
     Optional<Plant> findById(Long id);
     List<Plant> findAll();
