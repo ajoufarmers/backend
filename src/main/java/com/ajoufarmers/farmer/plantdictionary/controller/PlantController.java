@@ -24,12 +24,12 @@ public class PlantController {
         plantService.save(plant);
     }
 
-    @GetMapping("/plant/one")
+    @GetMapping("/plant/id")
     public ResponseEntity<?> getPlantById(@RequestParam Long id){
         return new ResponseEntity<>(plantService.findOne(id), HttpStatus.OK);
     }
 
-    @GetMapping("/plant/one")
+    @GetMapping("/plant/name")
     public ResponseEntity<?> getPlantByName(@RequestParam String name){
         return new ResponseEntity<>(plantService.findOne(name), HttpStatus.OK);
     }
