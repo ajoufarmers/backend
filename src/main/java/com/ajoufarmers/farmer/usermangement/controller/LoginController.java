@@ -1,4 +1,4 @@
-package com.ajoufarmers.farmer.usermangement.login.controller;
+package com.ajoufarmers.farmer.usermangement.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

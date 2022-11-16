@@ -1,8 +1,8 @@
-package com.ajoufarmers.farmer.usermangement.login.service;
+package com.ajoufarmers.farmer.usermangement.service;
 
-import com.ajoufarmers.farmer.usermangement.login.dto.OAuthAttributes;
-import com.ajoufarmers.farmer.usermangement.login.entity.Member;
-import com.ajoufarmers.farmer.usermangement.login.repository.MemberRepository;
+import com.ajoufarmers.farmer.usermangement.entity.Member;
+import com.ajoufarmers.farmer.usermangement.dto.OAuthAttributes;
+import com.ajoufarmers.farmer.usermangement.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;

@@ -1,6 +1,6 @@
-package com.ajoufarmers.farmer.usermangement.login.repository;
+package com.ajoufarmers.farmer.usermangement.repository;
 
-import com.ajoufarmers.farmer.usermangement.login.entity.Member;
+import com.ajoufarmers.farmer.usermangement.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

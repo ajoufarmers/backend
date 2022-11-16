@@ -1,4 +1,4 @@
-package com.ajoufarmers.farmer.usermangement.login.dto;
+package com.ajoufarmers.farmer.usermangement.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

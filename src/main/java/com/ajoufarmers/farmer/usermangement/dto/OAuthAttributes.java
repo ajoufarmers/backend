@@ -1,6 +1,6 @@
-package com.ajoufarmers.farmer.usermangement.login.dto;
+package com.ajoufarmers.farmer.usermangement.dto;
 
-import com.ajoufarmers.farmer.usermangement.login.entity.Member;
+import com.ajoufarmers.farmer.usermangement.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
