@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@Transactional
 @Service
 public class PlantService {
     private final PlantRepository plantRepository;
@@ -19,9 +18,8 @@ public class PlantService {
         this.plantRepository = plantRepository;
     }
 
-    public Long save(Plant plant){
-        plantRepository.save(plant);
-        return plant.getId();
+    public Plant save(Plant plant){
+        return plantRepository.save(plant);
     }
 
     public List<Plant> findPlants(){
