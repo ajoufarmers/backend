@@ -1,14 +1,12 @@
 package com.ajoufarmers.farmer.mypage.entity;
 
 import com.ajoufarmers.farmer.mypage.dto.MyPageEntryDto;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @ToString
 @Entity
