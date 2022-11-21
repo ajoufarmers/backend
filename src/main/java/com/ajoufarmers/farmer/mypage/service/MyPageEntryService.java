@@ -29,7 +29,7 @@ public class MyPageEntryService {
         return myPageEntryRepository.findById(plantId);
     }
 
-    public Optional<MyPageEntry> updateMyPlant(MyPageEntry myPageEntry) {
-        return myPageEntryRepository.update(myPageEntry);
+    public MyPageEntry updateMyPlant(MyPageEntry myPageEntry) {
+        return myPageEntryRepository.save(myPageEntry);
     }
 }
