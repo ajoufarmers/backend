@@ -21,8 +21,8 @@ public class MyPageEntryService {
         return myPageEntryRepository.save(myPageEntry);
     }
 
-    public List<MyPageEntry> findMyPlants() {
-        return myPageEntryRepository.findAll();
+    public List<MyPageEntry> findMyPlants(Long memberId) {
+        return myPageEntryRepository.findByMemberId(memberId);
     }
 
     public Optional<MyPageEntry> findOne(Long plantId) {

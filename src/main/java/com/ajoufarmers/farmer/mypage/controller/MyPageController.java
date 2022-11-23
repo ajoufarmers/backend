@@ -43,8 +43,8 @@ public class MyPageController {
     }
 
     @GetMapping("/mypage/list")
-    public ResponseEntity<?> getMyPlantList(){
-        return new ResponseEntity<>(myPageEntryService.findMyPlants(), HttpStatus.OK);
+    public ResponseEntity<?> getMyPlantList(@RequestParam Long memberId){
+        return new ResponseEntity<>(myPageEntryService.findMyPlants(memberId), HttpStatus.OK);
     }
 
     @PutMapping("/mypage/modify/nickname")
@@ -75,8 +75,8 @@ public class MyPageController {
         }
     }
     @GetMapping("/mypage/watertiming")
-    public ResponseEntity<?> getWaterTimingCheckList() throws ParseException {
-        List<MyPageEntry> myPageEntryList = myPageEntryService.findMyPlants();
+    public ResponseEntity<?> getWaterTimingCheckList(@RequestParam Long memberId) throws ParseException {
+        List<MyPageEntry> myPageEntryList = myPageEntryService.findMyPlants(memberId);
         List<Boolean> checkList = new ArrayList<>(myPageEntryList.size());
 
         for (MyPageEntry myPageEntry : myPageEntryList) {

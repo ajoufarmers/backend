@@ -31,10 +31,10 @@ class MyPageControllerTest {
     @Test
     void getMyPlantList() {
         myPageController.createMyPlant(1L, 1L, "/1/mypage/1", "2022-11-20", "모다피");
-        myPageController.createMyPlant(1L, 2L, "/1/mypage/2", "2022-11-19", "우츠통");
+        myPageController.createMyPlant(2L, 2L, "/1/mypage/2", "2022-11-19", "우츠통");
         myPageController.createMyPlant(1L, 3L, "/1/mypage/3", "2022-11-15", "우츠보트");
 
-        System.out.println(myPageController.getMyPlantList().toString());
+        System.out.println(myPageController.getMyPlantList(1L).toString());
     }
 
     @Test
@@ -49,7 +49,7 @@ class MyPageControllerTest {
         );
         myPageController.modifyMyPlantNickname(newEntry.getId(), "에어팟");
 
-        System.out.println(myPageController.getMyPlantList().toString());
+        System.out.println(myPageController.getMyPlantList(1L).toString());
     }
 
     @Test
@@ -64,7 +64,7 @@ class MyPageControllerTest {
         );
         myPageController.modifyMyPlantImage(newEntry.getId(), "/1/mypage/11");
 
-        System.out.println(myPageController.getMyPlantList().toString());
+        System.out.println(myPageController.getMyPlantList(1L).toString());
     }
 
     @Test
@@ -79,7 +79,7 @@ class MyPageControllerTest {
         );
         myPageController.modifyMyPlantWaterDate(newEntry.getId(), "2022-12-01");
 
-        System.out.println(myPageController.getMyPlantList().toString());
+        System.out.println(myPageController.getMyPlantList(1L).toString());
     }
 
     @Test
@@ -89,8 +89,8 @@ class MyPageControllerTest {
         addMyPageEntries();
 
         //System.out.println(newEntryList.toString());
-        System.out.println("식물 리스트: " + myPageController.getMyPlantList().toString());
-        System.out.println("물 알림 리스트: " + myPageController.getWaterTimingCheckList().toString());
+        System.out.println("식물 리스트: " + myPageController.getMyPlantList(1L).toString());
+        System.out.println("물 알림 리스트: " + myPageController.getWaterTimingCheckList(1L).toString());
     }
 
     private void addMyPageEntries(){

@@ -9,6 +9,6 @@ import java.util.Optional;
 @Repository
 public interface MyPageEntryRepository extends JpaRepository<MyPageEntry, Long> {
     MyPageEntry save(MyPageEntry myPageEntry);
-    List<MyPageEntry> findAll();
+    List<MyPageEntry> findByMemberId(Long memberId);
     Optional<MyPageEntry> findById(Long id);
 }
