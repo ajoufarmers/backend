@@ -28,7 +28,7 @@ public class MyPageEntry {
     @Builder
     public MyPageEntry(Long memberId, Long plantId, String imgUri, String waterDate, String nickname) {
         this.memberId = memberId;
-        this.plantId = memberId;
+        this.plantId = plantId;
         this.imgUri = imgUri;
         this.waterDate = waterDate;
         this.nickname = nickname;
