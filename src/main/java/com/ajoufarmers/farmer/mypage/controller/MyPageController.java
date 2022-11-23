@@ -79,16 +79,16 @@ public class MyPageController {
         List<MyPageEntry> myPageEntryList = myPageEntryService.findMyPlants();
         List<Boolean> checkList = new ArrayList<>(myPageEntryList.size());
 
-        for(int i = 0; i < myPageEntryList.size(); i++){
-            Date lateDate = new SimpleDateFormat("yyyy-MM-dd").parse(myPageEntryList.get(i).getWaterDate());
+        for (MyPageEntry myPageEntry : myPageEntryList) {
+            Date lateDate = new SimpleDateFormat("yyyy-MM-dd").parse(myPageEntry.getWaterDate());
             Date curDate = new SimpleDateFormat("yyyy-MM-dd").parse(LocalDate.now().toString());
-            long diffSec = (curDate.getTime() - lateDate.getTime())/1000;
+            long diffSec = (curDate.getTime() - lateDate.getTime()) / 1000;
 
-            Plant plantInfo = plantService.findOne(myPageEntryList.get(i).getPlantId()).get();
-            if(diffSec/(24*60*60) >= plantInfo.getWaterDate())
-                checkList.set(i, true);
+            Plant plantInfo = plantService.findOne(myPageEntry.getPlantId()).get();
+            if (diffSec / (24 * 60 * 60) >= plantInfo.getWaterDate())
+                checkList.add(true);
             else
-                checkList.set(i, false);
+                checkList.add(false);
         }
         return new ResponseEntity<>(checkList, HttpStatus.OK);
     }
