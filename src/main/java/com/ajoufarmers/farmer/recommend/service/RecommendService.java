@@ -22,9 +22,10 @@ public class RecommendService {
         int brightness = conditionsDto.getBrightness();
         int waterRate = conditionsDto.getWaterRate();
 
-        return plantRepository.findByConditions(category, size, difficulty, brightness, waterRate)
-                .stream().map(plant -> new RecommendPlantDto(plant.getId(), plant.getName(), plant.getImgUri()))
+        List<Plant> recommendPlants = plantRepository.findByConditions(category, size, difficulty, brightness, waterRate);
+
+        return recommendPlants.stream()
+                .map(plant -> new RecommendPlantDto(plant.getId(), plant.getName(), plant.getImgUri()))
                 .collect(Collectors.toList());
     }
-
 }

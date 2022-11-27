@@ -62,9 +62,15 @@ public class SecurityConfig {
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/","/css/**","/images/**","/js/**","/h2-console/**","/profile").permitAll()
-                .antMatchers("/api/v1/**").permitAll()
-                .anyRequest().authenticated()
+
+                // ********** 인증 생략을 위한 코드*********
+                .antMatchers("**").permitAll()
+                // ********** 인증 생략을 위한 주석*********
+                //.antMatchers("/","/css/**","/images/**","/js/**","/h2-console/**","/profile").permitAll()
+               // .antMatchers("/api/v1/**").permitAll()
+               // .anyRequest().authenticated()
+                // *************************************
+
                 .and()
                 .logout().logoutSuccessUrl("/")
                 .and()
