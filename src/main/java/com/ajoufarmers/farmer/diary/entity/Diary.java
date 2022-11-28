@@ -1,5 +1,6 @@
 package com.ajoufarmers.farmer.diary.entity;
 
+import com.ajoufarmers.farmer.diary.dto.DiaryDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,5 +35,14 @@ public class Diary {
         this.date = date;
         this.state = state;
         this.content = content;
+    }
+
+    public DiaryDto toDto(){
+        return DiaryDto.builder()
+                .id(this.id)
+                .date(this.date)
+                .state(this.state)
+                .content(this.content)
+                .build();
     }
 }
