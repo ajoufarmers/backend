@@ -39,3 +39,4 @@ public class PlantController {
         return new ResponseEntity<>(plantService.findPlants(), HttpStatus.OK);
     }
 }
+
