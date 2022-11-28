@@ -1,9 +1,9 @@
 package com.ajoufarmers.farmer.diary.controller;
 
 import com.ajoufarmers.farmer.diary.dto.DiaryDto;
+import com.ajoufarmers.farmer.diary.dto.WriteDiaryDto;
 import com.ajoufarmers.farmer.diary.service.DiaryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
