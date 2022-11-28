@@ -3,10 +3,8 @@ package com.ajoufarmers.farmer.diary.controller;
 import com.ajoufarmers.farmer.diary.dto.DiaryDto;
 import com.ajoufarmers.farmer.diary.service.DiaryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,6 +18,11 @@ public class DiaryController {
     @GetMapping("/list/{memberId}")
     public List<DiaryDto> getDiaryList(@PathVariable Long memberId){
         return diaryService.getDiaryListByMemberId(memberId);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteDiary(@PathVariable Long id){
+        return diaryService.deleteDiary(id);
     }
 
 
