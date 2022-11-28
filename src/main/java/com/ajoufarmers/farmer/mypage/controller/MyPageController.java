@@ -33,13 +33,14 @@ public class MyPageController {
     }
 
     @PostMapping("/mypage/new")
-    public void createMyPlant(
+    public ResponseEntity<?> createMyPlant(
             @RequestParam Long memberId,
             @RequestParam Long plantId,
             @RequestParam String imgUri,
             @RequestParam String waterDate,
             @RequestParam String nickname){
         myPageEntryService.saveMyPlant(new MyPageEntry(memberId, plantId, imgUri, waterDate, nickname));
+        return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
     @GetMapping("/mypage/list")
@@ -48,31 +49,37 @@ public class MyPageController {
     }
 
     @PutMapping("/mypage/modify/nickname")
-    public void modifyMyPlantNickname(@RequestParam Long id, @RequestParam String nickname){
+    public ResponseEntity<?> modifyMyPlantNickname(@RequestParam Long id, @RequestParam String nickname){
         Optional<MyPageEntry> myPageEntry = myPageEntryService.findOne(id);
         if(myPageEntry.isPresent()) {
             MyPageEntry newEntry = myPageEntry.get();
             newEntry.setNickname(nickname);
             myPageEntryService.updateMyPlant(newEntry);
+            return new ResponseEntity<>("success", HttpStatus.OK);
         }
+        return new ResponseEntity<>("fail", HttpStatus.OK);
     }
     @PutMapping("/mypage/modify/image")
-    public void modifyMyPlantImage(@RequestParam Long id, @RequestParam String imgUri){
+    public ResponseEntity<?> modifyMyPlantImage(@RequestParam Long id, @RequestParam String imgUri){
         Optional<MyPageEntry> myPageEntry = myPageEntryService.findOne(id);
         if(myPageEntry.isPresent()) {
             MyPageEntry newEntry = myPageEntry.get();
             newEntry.setImgUri(imgUri);
             myPageEntryService.updateMyPlant(newEntry);
+            return new ResponseEntity<>("success", HttpStatus.OK);
         }
+        return new ResponseEntity<>("fail", HttpStatus.OK);
     }
     @PutMapping("/mypage/modify/waterdate")
-    public void modifyMyPlantWaterDate(@RequestParam Long id, @RequestParam String waterDate){
+    public ResponseEntity<?> modifyMyPlantWaterDate(@RequestParam Long id, @RequestParam String waterDate){
         Optional<MyPageEntry> myPageEntry = myPageEntryService.findOne(id);
         if(myPageEntry.isPresent()) {
             MyPageEntry newEntry = myPageEntry.get();
             newEntry.setWaterDate(waterDate);
             myPageEntryService.updateMyPlant(newEntry);
+            return new ResponseEntity<>("success", HttpStatus.OK);
         }
+        return new ResponseEntity<>("fail", HttpStatus.OK);
     }
     @GetMapping("/mypage/watertiming")
     public ResponseEntity<?> getWaterTimingCheckList(@RequestParam Long memberId) throws ParseException {
