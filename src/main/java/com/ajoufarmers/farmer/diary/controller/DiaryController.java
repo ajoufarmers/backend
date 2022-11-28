@@ -25,4 +25,9 @@ public class DiaryController {
         diaryService.deleteDiary(id);
     }
 
+    @PostMapping
+    public void writeDiary(@RequestBody WriteDiaryDto writeDiaryDto){
+        diaryService.writeDiary(writeDiaryDto);
+    }
+
 }
