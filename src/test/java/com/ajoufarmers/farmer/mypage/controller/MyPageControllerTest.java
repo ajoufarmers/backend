@@ -1,5 +1,6 @@
 package com.ajoufarmers.farmer.mypage.controller;
 
+import com.ajoufarmers.farmer.mypage.dto.MyPageEntryDto;
 import com.ajoufarmers.farmer.mypage.entity.MyPageEntry;
 import com.ajoufarmers.farmer.mypage.service.MyPageEntryService;
 import com.ajoufarmers.farmer.plantdictionary.entity.Plant;
@@ -22,14 +23,12 @@ class MyPageControllerTest {
     @Autowired private MyPageEntryService myPageEntryService;
     @Autowired private PlantService plantService;
 
-    private List<MyPageEntry> newEntryList = new ArrayList<>(3);
-    private List<Plant> newPlantList = new ArrayList<>(3);
     @Test
     void createMyPlant() {
     }
 
     @Test
-    void getMyPlantList() {
+    void getMyPlantList() throws ParseException {
         myPageController.createMyPlant(1L, 1L, "/1/mypage/1", "2022-11-20", "모다피");
         myPageController.createMyPlant(2L, 2L, "/1/mypage/2", "2022-11-19", "우츠통");
         myPageController.createMyPlant(1L, 3L, "/1/mypage/3", "2022-11-15", "우츠보트");
@@ -38,14 +37,14 @@ class MyPageControllerTest {
     }
 
     @Test
-    void modifyMyPlantNickname() {
-        MyPageEntry newEntry = myPageEntryService.saveMyPlant(
+    void modifyMyPlantNickname() throws ParseException {
+        MyPageEntryDto newEntry = myPageEntryService.saveMyPlant(
                 MyPageEntry.builder()
                         .memberId(1L)
                         .plantId(1L)
                         .imgUri("/1/mypage/1")
                         .waterDate("2022-11-20")
-                        .nickname("모다피").build()
+                        .nickname("모다피").build().toDto()
         );
         myPageController.modifyMyPlantNickname(newEntry.getId(), "에어팟");
 
@@ -53,14 +52,14 @@ class MyPageControllerTest {
     }
 
     @Test
-    void modifyMyPlantImage() {
-        MyPageEntry newEntry = myPageEntryService.saveMyPlant(
+    void modifyMyPlantImage() throws ParseException {
+        MyPageEntryDto newEntry = myPageEntryService.saveMyPlant(
                 MyPageEntry.builder()
                         .memberId(1L)
                         .plantId(1L)
                         .imgUri("/1/mypage/1")
                         .waterDate("2022-11-20")
-                        .nickname("모다피").build()
+                        .nickname("모다피").build().toDto()
         );
         myPageController.modifyMyPlantImage(newEntry.getId(), "/1/mypage/11");
 
@@ -68,14 +67,14 @@ class MyPageControllerTest {
     }
 
     @Test
-    void modifyMyPlantWaterDate() {
-        MyPageEntry newEntry = myPageEntryService.saveMyPlant(
+    void modifyMyPlantWaterDate() throws ParseException {
+        MyPageEntryDto newEntry = myPageEntryService.saveMyPlant(
                 MyPageEntry.builder()
                         .memberId(1L)
                         .plantId(1L)
                         .imgUri("/1/mypage/1")
                         .waterDate("2022-11-20")
-                        .nickname("모다피").build()
+                        .nickname("모다피").build().toDto()
         );
         myPageController.modifyMyPlantWaterDate(newEntry.getId(), "2022-12-01");
 
@@ -90,34 +89,34 @@ class MyPageControllerTest {
 
         //System.out.println(newEntryList.toString());
         System.out.println("식물 리스트: " + myPageController.getMyPlantList(1L).toString());
-        System.out.println("물 알림 리스트: " + myPageController.getWaterTimingCheckList(1L).toString());
+        //System.out.println("물 알림 리스트: " + myPageController.getWaterTimingCheckList(1L).toString());
     }
 
     private void addMyPageEntries(){
-        newEntryList.add(myPageEntryService.saveMyPlant(
+        myPageEntryService.saveMyPlant(
                 MyPageEntry.builder()
                         .memberId(1L)
                         .plantId(plantService.findOne("콩나물").get().getId())
                         .imgUri("/1/mypage/1")
                         .waterDate("2022-11-22")
-                        .nickname("모다피").build()));
-        newEntryList.add(myPageEntryService.saveMyPlant(
+                        .nickname("모다피").build().toDto());
+        myPageEntryService.saveMyPlant(
                 MyPageEntry.builder()
                         .memberId(1L)
                         .plantId(plantService.findOne("배추").get().getId())
                         .imgUri("/1/mypage/2")
                         .waterDate("2022-11-19")
-                        .nickname("우츠동").build()));
-        newEntryList.add(myPageEntryService.saveMyPlant(
+                        .nickname("우츠동").build().toDto());
+        myPageEntryService.saveMyPlant(
                 MyPageEntry.builder()
                         .memberId(1L)
                         .plantId(plantService.findOne("양배추").get().getId())
                         .imgUri("/1/mypage/3")
                         .waterDate("2022-11-15")
-                        .nickname("우츠보트").build()));
+                        .nickname("우츠보트").build().toDto());
     }
     private void addPlants(){
-        newPlantList.add(plantService.save(Plant.builder()
+        plantService.save(Plant.builder()
                 .name("콩나물")
                 .category(4)
                 .brightness(0)
@@ -133,8 +132,8 @@ class MyPageControllerTest {
                 .waterDate(1)
                 .waterInfo("자주줘")
                 .waterRate(2)
-                .build()));
-        newPlantList.add(plantService.save(Plant.builder()
+                .build());
+        plantService.save(Plant.builder()
                 .name("배추")
                 .category(0)
                 .brightness(3)
@@ -150,8 +149,8 @@ class MyPageControllerTest {
                 .waterDate(5)
                 .waterInfo("적당히")
                 .waterRate(1)
-                .build()));
-        newPlantList.add(plantService.save(Plant.builder()
+                .build());
+        plantService.save(Plant.builder()
                 .name("양배추")
                 .category(0)
                 .brightness(3)
@@ -167,6 +166,6 @@ class MyPageControllerTest {
                 .waterDate(5)
                 .waterInfo("적당히")
                 .waterRate(1)
-                .build()));
+                .build());
     }
 }

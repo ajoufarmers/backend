@@ -1,5 +1,6 @@
 package com.ajoufarmers.farmer.mypage.controller;
 
+import com.ajoufarmers.farmer.mypage.dto.MyPageEntryDto;
 import com.ajoufarmers.farmer.mypage.entity.MyPageEntry;
 import com.ajoufarmers.farmer.mypage.service.MyPageEntryService;
 import com.ajoufarmers.farmer.plantdictionary.entity.Plant;
@@ -39,20 +40,24 @@ public class MyPageController {
             @RequestParam String imgUri,
             @RequestParam String waterDate,
             @RequestParam String nickname){
-        myPageEntryService.saveMyPlant(new MyPageEntry(memberId, plantId, imgUri, waterDate, nickname));
+        myPageEntryService.saveMyPlant(new MyPageEntry(memberId, plantId, imgUri, waterDate, nickname).toDto());
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
     @GetMapping("/mypage/list")
-    public ResponseEntity<?> getMyPlantList(@RequestParam Long memberId){
-        return new ResponseEntity<>(myPageEntryService.findMyPlants(memberId), HttpStatus.OK);
+    public ResponseEntity<?> getMyPlantList(@RequestParam Long memberId) throws ParseException {
+        List<MyPageEntryDto> myPageEntryDtoList = myPageEntryService.findMyPlants(memberId);
+        for (MyPageEntryDto myPageEntryDto : myPageEntryDtoList) {
+            myPageEntryDto.setIsWater(getWaterTimingCheck(myPageEntryDto));
+        }
+        return new ResponseEntity<>(myPageEntryDtoList, HttpStatus.OK);
     }
 
     @PutMapping("/mypage/modify/nickname")
     public ResponseEntity<?> modifyMyPlantNickname(@RequestParam Long id, @RequestParam String nickname){
-        Optional<MyPageEntry> myPageEntry = myPageEntryService.findOne(id);
-        if(myPageEntry.isPresent()) {
-            MyPageEntry newEntry = myPageEntry.get();
+        Optional<MyPageEntryDto> myPageEntryDto = myPageEntryService.findOne(id);
+        if(myPageEntryDto.isPresent()) {
+            MyPageEntryDto newEntry = myPageEntryDto.get();
             newEntry.setNickname(nickname);
             myPageEntryService.updateMyPlant(newEntry);
             return new ResponseEntity<>("success", HttpStatus.OK);
@@ -61,9 +66,9 @@ public class MyPageController {
     }
     @PutMapping("/mypage/modify/image")
     public ResponseEntity<?> modifyMyPlantImage(@RequestParam Long id, @RequestParam String imgUri){
-        Optional<MyPageEntry> myPageEntry = myPageEntryService.findOne(id);
-        if(myPageEntry.isPresent()) {
-            MyPageEntry newEntry = myPageEntry.get();
+        Optional<MyPageEntryDto> myPageEntryDto = myPageEntryService.findOne(id);
+        if(myPageEntryDto.isPresent()) {
+            MyPageEntryDto newEntry = myPageEntryDto.get();
             newEntry.setImgUri(imgUri);
             myPageEntryService.updateMyPlant(newEntry);
             return new ResponseEntity<>("success", HttpStatus.OK);
@@ -72,31 +77,37 @@ public class MyPageController {
     }
     @PutMapping("/mypage/modify/waterdate")
     public ResponseEntity<?> modifyMyPlantWaterDate(@RequestParam Long id, @RequestParam String waterDate){
-        Optional<MyPageEntry> myPageEntry = myPageEntryService.findOne(id);
-        if(myPageEntry.isPresent()) {
-            MyPageEntry newEntry = myPageEntry.get();
+        Optional<MyPageEntryDto> myPageEntryDto = myPageEntryService.findOne(id);
+        if(myPageEntryDto.isPresent()) {
+            MyPageEntryDto newEntry = myPageEntryDto.get();
             newEntry.setWaterDate(waterDate);
             myPageEntryService.updateMyPlant(newEntry);
             return new ResponseEntity<>("success", HttpStatus.OK);
         }
         return new ResponseEntity<>("fail", HttpStatus.OK);
     }
-    @GetMapping("/mypage/watertiming")
-    public ResponseEntity<?> getWaterTimingCheckList(@RequestParam Long memberId) throws ParseException {
-        List<MyPageEntry> myPageEntryList = myPageEntryService.findMyPlants(memberId);
-        List<Boolean> checkList = new ArrayList<>(myPageEntryList.size());
 
-        for (MyPageEntry myPageEntry : myPageEntryList) {
-            Date lateDate = new SimpleDateFormat("yyyy-MM-dd").parse(myPageEntry.getWaterDate());
-            Date curDate = new SimpleDateFormat("yyyy-MM-dd").parse(LocalDate.now().toString());
-            long diffSec = (curDate.getTime() - lateDate.getTime()) / 1000;
-
-            Plant plantInfo = plantService.findOne(myPageEntry.getPlantId()).get();
-            if (diffSec / (24 * 60 * 60) >= plantInfo.getWaterDate())
-                checkList.add(true);
-            else
-                checkList.add(false);
+    @PostMapping("/mypage/delete")
+    public ResponseEntity<?> deleteMyPlant(@RequestParam Long id){
+        Optional<MyPageEntryDto> myPageEntryDto = myPageEntryService.findOne(id);
+        if(myPageEntryDto.isPresent()){
+            myPageEntryService.deleteMyPlant(id);
+            return new ResponseEntity<>("success", HttpStatus.OK);
         }
-        return new ResponseEntity<>(checkList, HttpStatus.OK);
+        else
+            return new ResponseEntity<>("fail", HttpStatus.OK);
+    }
+
+    private Boolean getWaterTimingCheck(MyPageEntryDto myPageEntryDto) throws ParseException {
+        boolean isWater = false;
+
+        Date lateDate = new SimpleDateFormat("yyyy-MM-dd").parse(myPageEntryDto.getWaterDate());
+        Date curDate = new SimpleDateFormat("yyyy-MM-dd").parse(LocalDate.now().toString());
+        long diffSec = (curDate.getTime() - lateDate.getTime()) / 1000;
+
+        Plant plantInfo = plantService.findOne(myPageEntryDto.getPlantId()).get();
+
+        isWater = diffSec / (24 * 60 * 60) >= plantInfo.getWaterDate();
+        return isWater;
     }
 }

@@ -1,5 +1,6 @@
 package com.ajoufarmers.farmer.mypage.service;
 
+import com.ajoufarmers.farmer.mypage.dto.MyPageEntryDto;
 import com.ajoufarmers.farmer.mypage.entity.MyPageEntry;
 import com.ajoufarmers.farmer.mypage.repository.MyPageEntryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MyPageEntryService {
@@ -17,19 +19,24 @@ public class MyPageEntryService {
         this.myPageEntryRepository = myPageEntryRepository;
     }
 
-    public MyPageEntry saveMyPlant(MyPageEntry myPageEntry) {
-        return myPageEntryRepository.save(myPageEntry);
+    public MyPageEntryDto saveMyPlant(MyPageEntryDto myPageEntryDto) {
+        return myPageEntryRepository.save(myPageEntryDto.toEntity()).toDto();
     }
 
-    public List<MyPageEntry> findMyPlants(Long memberId) {
-        return myPageEntryRepository.findByMemberId(memberId);
+    public List<MyPageEntryDto> findMyPlants(Long memberId) {
+        return myPageEntryRepository.findByMemberId(memberId).stream().map(
+                MyPageEntry::toDto).collect(Collectors.toList());
     }
 
-    public Optional<MyPageEntry> findOne(Long plantId) {
-        return myPageEntryRepository.findById(plantId);
+    public Optional<MyPageEntryDto> findOne(Long plantId) {
+        return Optional.ofNullable(myPageEntryRepository.findById(plantId).get().toDto());
     }
 
-    public MyPageEntry updateMyPlant(MyPageEntry myPageEntry) {
-        return myPageEntryRepository.save(myPageEntry);
+    public MyPageEntryDto updateMyPlant(MyPageEntryDto myPageEntryDto) {
+        return myPageEntryRepository.save(myPageEntryDto.toEntity()).toDto();
+    }
+
+    public void deleteMyPlant(Long plantId){
+        myPageEntryRepository.deleteById(plantId);
     }
 }

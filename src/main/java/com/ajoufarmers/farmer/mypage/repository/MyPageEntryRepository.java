@@ -11,4 +11,5 @@ public interface MyPageEntryRepository extends JpaRepository<MyPageEntry, Long> 
     MyPageEntry save(MyPageEntry myPageEntry);
     List<MyPageEntry> findByMemberId(Long memberId);
     Optional<MyPageEntry> findById(Long id);
+    void deleteById(Long id);
 }
