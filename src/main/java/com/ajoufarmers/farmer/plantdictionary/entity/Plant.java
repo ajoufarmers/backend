@@ -2,14 +2,12 @@ package com.ajoufarmers.farmer.plantdictionary.entity;
 
 import com.ajoufarmers.farmer.plantdictionary.dto.PlantDto;
 import com.ajoufarmers.farmer.usermangement.dto.MemberDto;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @ToString
 @Entity
