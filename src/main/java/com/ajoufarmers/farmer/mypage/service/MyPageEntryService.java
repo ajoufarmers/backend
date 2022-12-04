@@ -3,6 +3,7 @@ package com.ajoufarmers.farmer.mypage.service;
 import com.ajoufarmers.farmer.mypage.dto.MyPageEntryDto;
 import com.ajoufarmers.farmer.mypage.entity.MyPageEntry;
 import com.ajoufarmers.farmer.mypage.repository.MyPageEntryRepository;
+import com.ajoufarmers.farmer.plantdictionary.entity.Plant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,7 @@ public class MyPageEntryService {
     }
 
     public Optional<MyPageEntryDto> findOne(Long plantId) {
-        return Optional.ofNullable(myPageEntryRepository.findById(plantId).get().toDto());
+        return myPageEntryRepository.findById(plantId).map(MyPageEntry::toDto).or(Optional::empty);
     }
 
     public MyPageEntryDto updateMyPlant(MyPageEntryDto myPageEntryDto) {
