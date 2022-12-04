@@ -1,5 +1,6 @@
 package com.ajoufarmers.farmer.plantdictionary.service;
 
+import com.ajoufarmers.farmer.plantdictionary.dto.PlantDto;
 import com.ajoufarmers.farmer.plantdictionary.entity.Plant;
 import com.ajoufarmers.farmer.plantdictionary.repository.PlantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PlantService {
@@ -22,14 +24,15 @@ public class PlantService {
         return plantRepository.save(plant);
     }
 
-    public List<Plant> findPlants(){
-        return plantRepository.findAll();
+    public List<PlantDto> findPlants(){
+        return plantRepository.findAll().stream().map(
+                Plant::toDto).collect(Collectors.toList());
     }
 
-    public Optional<Plant> findOne(Long plantId){
-        return plantRepository.findById(plantId);
+    public Optional<PlantDto> findOne(Long plantId){
+        return plantRepository.findById(plantId).map(Plant::toDto).or(Optional::empty);
     }
-    public Optional<Plant> findOne(String plantName){
-        return plantRepository.findByName(plantName);
+    public Optional<PlantDto> findOne(String plantName){
+        return plantRepository.findByName(plantName).map(Plant::toDto).or(Optional::empty);
     }
 }

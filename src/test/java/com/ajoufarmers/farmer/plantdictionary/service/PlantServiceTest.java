@@ -1,5 +1,6 @@
 package com.ajoufarmers.farmer.plantdictionary.service;
 
+import com.ajoufarmers.farmer.plantdictionary.dto.PlantDto;
 import com.ajoufarmers.farmer.plantdictionary.entity.Plant;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,7 @@ class PlantServiceTest {
                 .waterInfo("적당히")
                 .waterRate(1)
                 .build());
-        Optional<Plant> plant = plantService.findOne(newPlant.getId());
+        Optional<PlantDto> plant = plantService.findOne(newPlant.getId());
         if(plant.isPresent())
             System.out.println(plant.toString());
         else
@@ -92,7 +93,7 @@ class PlantServiceTest {
                 .waterInfo("적당히")
                 .waterRate(1)
                 .build());
-        Optional<Plant> plant = plantService.findOne("양상추");
+        Optional<PlantDto> plant = plantService.findOne("양상추");
         if(plant.isPresent())
             System.out.println(plant.toString());
         else

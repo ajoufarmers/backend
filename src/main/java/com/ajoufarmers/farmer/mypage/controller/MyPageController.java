@@ -3,6 +3,7 @@ package com.ajoufarmers.farmer.mypage.controller;
 import com.ajoufarmers.farmer.mypage.dto.MyPageEntryDto;
 import com.ajoufarmers.farmer.mypage.entity.MyPageEntry;
 import com.ajoufarmers.farmer.mypage.service.MyPageEntryService;
+import com.ajoufarmers.farmer.plantdictionary.dto.PlantDto;
 import com.ajoufarmers.farmer.plantdictionary.entity.Plant;
 import com.ajoufarmers.farmer.plantdictionary.service.PlantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,7 +106,7 @@ public class MyPageController {
         Date curDate = new SimpleDateFormat("yyyy-MM-dd").parse(LocalDate.now().toString());
         long diffSec = (curDate.getTime() - lateDate.getTime()) / 1000;
 
-        Plant plantInfo = plantService.findOne(myPageEntryDto.getPlantId()).get();
+        PlantDto plantInfo = plantService.findOne(myPageEntryDto.getPlantId()).get();
 
         isWater = diffSec / (24 * 60 * 60) >= plantInfo.getWaterDate();
         return isWater;
