@@ -14,7 +14,7 @@ public class WriteDiaryDto {
 
     private Long memberId;
 
-    private LocalDate date;
+    private String date;
 
     private Integer state;
 

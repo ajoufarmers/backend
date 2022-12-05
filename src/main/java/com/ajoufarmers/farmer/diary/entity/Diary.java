@@ -22,23 +22,32 @@ public class Diary {
     private Long memberId;
 
     @Column(nullable = false)
-    private LocalDate date;
+    private String date;
 
     @Column(nullable = false)
     private Integer state;
 
     private String content;
 
+
+
     @Builder
-    public Diary(Long memberId, LocalDate date, Integer state, String content) {
+    public Diary(Long memberId, String date, Integer state, String content) {
         this.memberId = memberId;
         this.date = date;
         this.state = state;
         this.content = content;
     }
+    public void changeState(int state) {
+        this.state = state;
+    }
 
+    public void changeContent(String content) {
+        this.content = content;
+    }
     public DiaryDto toDto(){
         return DiaryDto.builder()
+                .memberId(this.memberId)
                 .id(this.id)
                 .date(this.date)
                 .state(this.state)

@@ -12,7 +12,9 @@ import java.time.LocalDate;
 public class DiaryDto {
     private Long id;
 
-    private LocalDate date;
+    private Long memberId;
+
+    private String date;
 
     private Integer state;
 

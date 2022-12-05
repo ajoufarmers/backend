@@ -12,4 +12,6 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
     Optional<Diary> findById(Long id);
 
+    Diary save(Diary diary);
+
 }
