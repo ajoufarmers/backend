@@ -37,4 +37,12 @@ public class DiaryService {
         diaryRepository.save(new Diary(memberId, date, state, content));
     }
 
+    public void updateState(Long id, int state){
+
+    }
+
+    public void updateContent(Long id, String content){
+
+    }
+
 }
