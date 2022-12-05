@@ -30,4 +30,14 @@ public class DiaryController {
         diaryService.writeDiary(writeDiaryDto);
     }
 
+    @PatchMapping("/{id}/state")
+    public void updateState(@PathVariable Long id, @RequestBody int state){
+        diaryService.updateState(id, state);
+    }
+
+    @PatchMapping("/{id}/state")
+    public void updateContent(@PathVariable Long id, @RequestBody String content){
+        diaryService.updateContent(id, content);
+    }
+
 }
