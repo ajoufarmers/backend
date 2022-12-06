@@ -22,18 +22,14 @@ public class DiaryService {
 
     // 일기 작성 기능
     public void writeDiary(WriteDiaryDto writeDiaryDto){
-        Long memberId = writeDiaryDto.getMemberId();
-        String date = writeDiaryDto.getDate();
-        Integer state = writeDiaryDto.getState();
-        String content = writeDiaryDto.getContent();
-
-        diaryRepository.save(new Diary(memberId, date, state, content));
+        diaryRepository.save(writeDiaryDto.toDiary());
     }
 
     // 사용자별 일기 찾기 기능
     public List<DiaryDto> getDiaryListByMemberId(Long memberId){
+
         return diaryRepository.findByMemberId(memberId).stream()
-                .map(diary -> diary.toDto())
+                .map(diary -> new DiaryDto(diary.getId(), diary.getMemberId(), diary.getDate(), diary.getState(), diary.getContent()))
                 .collect(Collectors.toList());
     }
 
@@ -43,26 +39,18 @@ public class DiaryService {
     }
 
 
-
-    // 상태 수정 기능
-    public ResponseEntity<?> updateState(Long id, int state){
+    //  일기 수정 기능
+    public ResponseEntity<?> updateDiary(Long id, WriteDiaryDto writeDiaryDto){
         Optional<Diary> diary = diaryRepository.findById(id);
-        if (diary.isPresent()) {
-            Diary newDiary = diary.get();
-            newDiary.changeState(state);
-            diaryRepository.save(newDiary);
-            return new ResponseEntity<>("success", HttpStatus.OK);
-        }
-        return new ResponseEntity<>("fail", HttpStatus.OK);
-    }
 
-    //  내용 수정 기능
-    public ResponseEntity<?> updateContent(Long id, String content){
-        Optional<Diary> diary = diaryRepository.findById(id);
         if (diary.isPresent()) {
-            Diary newDiary = diary.get();
-            newDiary.changeContent(content);
-            diaryRepository.save(newDiary);
+            Diary findDiary = diary.get();
+
+            findDiary.changeContent(writeDiaryDto.getContent());
+            findDiary.changeState(writeDiaryDto.getState());
+
+            diaryRepository.save(findDiary);
+
             return new ResponseEntity<>("success", HttpStatus.OK);
         }
         return new ResponseEntity<>("fail", HttpStatus.OK);

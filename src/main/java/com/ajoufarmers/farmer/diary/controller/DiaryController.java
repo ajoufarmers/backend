@@ -30,16 +30,10 @@ public class DiaryController {
         diaryService.deleteDiary(id);
     }
 
-
-
-    @PatchMapping("/{id}/state")
-    public ResponseEntity<?> updateState(@PathVariable Long id, @RequestBody int state){
-        return diaryService.updateState(id, state);
+    @PutMapping ("/{id}")
+    public ResponseEntity<?> updateDiary(@PathVariable Long id, @RequestBody WriteDiaryDto writeDiaryDto){
+        return diaryService.updateDiary(id, writeDiaryDto);
     }
 
-    @PatchMapping("/{id}/content")
-    public ResponseEntity<?> updateContent(@PathVariable Long id, @RequestBody String content){
-        return diaryService.updateContent(id, content);
-    }
 
 }
