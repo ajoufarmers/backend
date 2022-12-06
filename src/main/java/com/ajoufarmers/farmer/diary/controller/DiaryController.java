@@ -16,6 +16,10 @@ public class DiaryController {
 
     private final DiaryService diaryService;
 
+    @PostMapping
+    public void writeDiary(@RequestBody WriteDiaryDto writeDiaryDto){
+        diaryService.writeDiary(writeDiaryDto);
+    }
     @GetMapping("/list/{memberId}")
     public List<DiaryDto> getDiaryList(@PathVariable Long memberId){
         return diaryService.getDiaryListByMemberId(memberId);
@@ -26,10 +30,7 @@ public class DiaryController {
         diaryService.deleteDiary(id);
     }
 
-    @PostMapping
-    public void writeDiary(@RequestBody WriteDiaryDto writeDiaryDto){
-        diaryService.writeDiary(writeDiaryDto);
-    }
+
 
     @PatchMapping("/{id}/state")
     public ResponseEntity<?> updateState(@PathVariable Long id, @RequestBody int state){
